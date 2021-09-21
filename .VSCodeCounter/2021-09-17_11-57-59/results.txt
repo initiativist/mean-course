@@ -1,0 +1,70 @@
+Date : 2021-09-17 11:57:59
+Directory : c:\Users\10929291\Documents\Development\mean-course
+Total : 33 files,  13446 codes, 89 comments, 114 blanks, all 13649 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          6 |     13,012 |          3 |          6 |     13,021 |
+| TypeScript |         14 |        213 |         77 |         64 |        354 |
+| JavaScript |          3 |        121 |          8 |         19 |        148 |
+| HTML       |          5 |         69 |          0 |          5 |         74 |
+| CSS        |          4 |         17 |          1 |          6 |         24 |
+| Markdown   |          1 |         14 |          0 |         14 |         28 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                     | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                        |         33 |     13,446 |         89 |        114 |     13,649 |
+| backend                                                                                                  |          1 |         42 |          0 |          8 |         50 |
+| src                                                                                                      |         23 |        299 |         78 |         75 |        452 |
+| src\app                                                                                                  |         16 |        246 |          5 |         51 |        302 |
+| src\app\header                                                                                           |          2 |         10 |          0 |          4 |         14 |
+| src\app\posts                                                                                            |          8 |        139 |          5 |         30 |        174 |
+| src\app\posts\post-create                                                                                |          3 |         60 |          0 |         12 |         72 |
+| src\app\posts\post-list                                                                                  |          3 |         44 |          5 |         10 |         59 |
+| src\environments                                                                                         |          2 |          6 |         11 |          4 |         21 |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                 | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\10929291\Documents\Development\mean-course\README.md                                            | Markdown   |         14 |          0 |         14 |         28 |
+| c:\Users\10929291\Documents\Development\mean-course\angular.json                                         | JSON       |        111 |          0 |          1 |        112 |
+| c:\Users\10929291\Documents\Development\mean-course\backend\app.js                                       | JavaScript |         42 |          0 |          8 |         50 |
+| c:\Users\10929291\Documents\Development\mean-course\karma.conf.js                                        | JavaScript |         37 |          6 |          2 |         45 |
+| c:\Users\10929291\Documents\Development\mean-course\package-lock.json                                    | JSON       |     12,796 |          0 |          1 |     12,797 |
+| c:\Users\10929291\Documents\Development\mean-course\package.json                                         | JSON       |         45 |          0 |          1 |         46 |
+| c:\Users\10929291\Documents\Development\mean-course\server.js                                            | JavaScript |         42 |          2 |          9 |         53 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\app-routing.module.ts                        | TypeScript |          8 |          0 |          3 |         11 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\app.component.css                            | CSS        |          4 |          0 |          1 |          5 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\app.component.html                           | HTML       |          5 |          0 |          1 |          6 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\app.component.spec.ts                        | TypeScript |         31 |          0 |          5 |         36 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\app.component.ts                             | TypeScript |         10 |          0 |          2 |         12 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\app.module.ts                                | TypeScript |         39 |          0 |          5 |         44 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\header\header.component.html                 | HTML       |          3 |          0 |          1 |          4 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\header\header.component.ts                   | TypeScript |          7 |          0 |          3 |         10 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\posts\post-create\post-create.component.css  | CSS        |          4 |          0 |          1 |          5 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\posts\post-create\post-create.component.html | HTML       |         32 |          0 |          1 |         33 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\posts\post-create\post-create.component.ts   | TypeScript |         24 |          0 |         10 |         34 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\posts\post-list\post-list.component.css      | CSS        |          7 |          0 |          2 |          9 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\posts\post-list\post-list.component.html     | HTML       |         13 |          0 |          1 |         14 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\posts\post-list\post-list.component.ts       | TypeScript |         24 |          5 |          7 |         36 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\posts\post.model.ts                          | TypeScript |          6 |          0 |          2 |          8 |
+| c:\Users\10929291\Documents\Development\mean-course\src\app\posts\posts.service.ts                       | TypeScript |         29 |          0 |          6 |         35 |
+| c:\Users\10929291\Documents\Development\mean-course\src\environments\environment.prod.ts                 | TypeScript |          3 |          0 |          1 |          4 |
+| c:\Users\10929291\Documents\Development\mean-course\src\environments\environment.ts                      | TypeScript |          3 |         11 |          3 |         17 |
+| c:\Users\10929291\Documents\Development\mean-course\src\index.html                                       | HTML       |         16 |          0 |          1 |         17 |
+| c:\Users\10929291\Documents\Development\mean-course\src\main.ts                                          | TypeScript |          9 |          0 |          4 |         13 |
+| c:\Users\10929291\Documents\Development\mean-course\src\polyfills.ts                                     | TypeScript |          1 |         57 |          8 |         66 |
+| c:\Users\10929291\Documents\Development\mean-course\src\styles.css                                       | CSS        |          2 |          1 |          2 |          5 |
+| c:\Users\10929291\Documents\Development\mean-course\src\test.ts                                          | TypeScript |         19 |          4 |          5 |         28 |
+| c:\Users\10929291\Documents\Development\mean-course\tsconfig.app.json                                    | JSON       |         14 |          1 |          1 |         16 |
+| c:\Users\10929291\Documents\Development\mean-course\tsconfig.json                                        | JSON       |         29 |          1 |          1 |         31 |
+| c:\Users\10929291\Documents\Development\mean-course\tsconfig.spec.json                                   | JSON       |         17 |          1 |          1 |         19 |
+| Total                                                                                                    |            |     13,446 |         89 |        114 |     13,649 |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
