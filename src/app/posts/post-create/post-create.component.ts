@@ -19,7 +19,7 @@ export class PostCreateComponent implements OnInit {
 
   private mode = 'create';
   private postId = '';
-  post: Post = { id: '', title: '', content: '' };
+  post: Post = { id: '', title: '', content: '', imagePath: null };
 
   constructor(
     public postsService: PostsService,
@@ -48,6 +48,7 @@ export class PostCreateComponent implements OnInit {
             id: post._id,
             title: post.title,
             content: post.content,
+            imagePath: null
           };
           this.form.setValue({
             image: null,
