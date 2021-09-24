@@ -1,5 +1,14 @@
+<!--
+
+  This doc uses a reactive form to edit and create posts!
+  - Uses form controls instead of bindings for form information
+
+-->
+
 <mat-card>
+  <!-- Loading animation -->
   <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <!-- Start of the form! The submission key is the onsavepost function - submit is assigned to a button below -->
   <form [formGroup]="form" *ngIf="!isLoading" (submit)="onSavePost()">
     <mat-form-field>
       <input
