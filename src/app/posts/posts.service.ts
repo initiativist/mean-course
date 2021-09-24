@@ -3,7 +3,6 @@ import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { PostCreateComponent } from './post-create/post-create.component';
 import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })

@@ -63,14 +63,12 @@ export class PostCreateComponent implements OnInit {
   }
 
   onImagePicked(event: Event) {
-    console.log("Image successfully picked")
     const file = (event.target as HTMLInputElement).files![0];
     this.form.patchValue({ image: file });
     this.form.get('image')?.updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result as string;
-      console.log("imagepreview set")
     };
     reader.readAsDataURL(file);
   }
