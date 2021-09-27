@@ -1,3 +1,14 @@
+/*
+
+I copied this file, not yet comfortable with it's inner workings.
+I know it does a few things:
+- handles improper port usage
+- standardizes port requests
+- catches for used ports and access restrictied ports
+- creates the server based on the exchange app in the background
+
+*/
+
 const app = require("./backend/app");
 const debug = require("debug")("node-angular");
 const http = require("http");
