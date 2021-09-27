@@ -23,44 +23,51 @@ import { Post } from './post.model';
 @Injectable({ providedIn: 'root' })
 export class PostsService {
   private posts: Post[] = []; // Frontend Posts DB
-  private postsUpdated = new Subject<Post[]>(); // Event stream (Subject) for updating posts
+  private postsUpdated = new Subject<{ posts: Post[]; postCount: number }>(); // Event stream (Subject) for updating posts
 
   // Import HttpClient
   // Import Router from app-routing.module.ts
   constructor(private http: HttpClient, private router: Router) {}
 
   // Request full list of posts
-  getPosts() {
+  getPosts(postsPerPage: number, currentPage: number) {
+    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
     this.http
 
       //Send get request via http protocol to server - returning javascript object of type { message: string; posts: any }
-      .get<{ message: string; posts: any }>('http://localhost:3000/api/posts')
+      .get<{ message: string; posts: any; maxPosts: number }>(
+        'http://localhost:3000/api/posts' + queryParams
+      )
 
       // format the data through a pipe that changes _id to id.
       .pipe(
         // Asynchronous Map from the observable
         map((postData) => {
-          return postData.posts.map((post: any) => {
-            // Map Function working through array
-            return {
-              title: post.title,
-              content: post.content,
-              id: post._id, // Changing it to fronted id
-              imagePath: post.imagePath,
-            };
-          });
+          return {
+            posts: postData.posts.map((post: any) => {
+              // Map Function working through array
+              return {
+                title: post.title,
+                content: post.content,
+                id: post._id, // Changing it to fronted id
+                imagePath: post.imagePath,
+              };
+            }),
+            maxPosts: postData.maxPosts,
+          };
         })
       )
 
       // Await response asynchronously
-      .subscribe((transformedPosts) => {
-        // Transformed posts are "piped" through the map function
-
+      .subscribe((transformedPostData) => {
         // Set frontend array to response
-        this.posts = transformedPosts;
+        this.posts = transformedPostData.posts;
 
         // Send out update to listeners of the subject that posts have updated
-        this.postsUpdated.next([...this.posts]);
+        this.postsUpdated.next({
+          posts: [...this.posts],
+          postCount: transformedPostData.maxPosts,
+        });
       });
   }
 
@@ -95,27 +102,7 @@ export class PostsService {
 
       // Image path and ID received from server assignment for frontend DB
       .subscribe((responseData) => {
-        // Create post object from response data (contains post object)
-        const newPost: Post = {
-          id: responseData.post.id,
-          title: title,
-          content: content,
-          imagePath: responseData.post.imagePath,
-        };
-
-        // UPDATING LOCAL DB (after successful POST request)
-
-        // Setting the post id for the new post
-        newPost.id = responseData.post.id;
-
-        // Adding new post to local db
-        this.posts.push(newPost);
-
-        // Trigger event listeners
-        this.postsUpdated.next([...this.posts]);
-
-        // Go back to home
-        this.router.navigate(['/']);
+        this.router.navigate(['/']); // delete local state updates
       });
   }
 
@@ -152,49 +139,12 @@ export class PostsService {
 
       // On success
       .subscribe((response) => {
-        // placeholder array
-        const updatedPosts = [...this.posts];
-
-        // Find the post being updated
-        const oldPostId = this.posts.findIndex((p) => p.id === id);
-
-        // Create new post for frontend DB
-        const post: Post = {
-          id: id,
-          title: title,
-          content: content,
-          imagePath: '',
-        };
-
-        // Update placeholder array
-        updatedPosts[oldPostId] = post;
-
-        // Update frontend array
-        this.posts = updatedPosts;
-
-        // Trigger event listener
-        this.postsUpdated.next({ ...this.posts });
-
-        //Navigate Home
         this.router.navigate(['/']);
       });
   }
 
   // DELETE HTTP request
   deletePost(postId: string) {
-    this.http
-      .delete('http://localhost:3000/api/posts/' + postId)
-
-      // On Success
-      .subscribe(() => {
-        // Placeholder array filters for deleted post
-        const updatedPosts = this.posts.filter((post) => post.id !== postId);
-
-        // Update frontend array with placeholder array
-        this.posts = updatedPosts;
-
-        // Trigger event listner
-        this.postsUpdated.next([...this.posts]);
-      });
+    return this.http.delete('http://localhost:3000/api/posts/' + postId);
   }
 }

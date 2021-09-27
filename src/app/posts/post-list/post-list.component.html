@@ -5,23 +5,40 @@
   - Posts don't have individual pages, but they have functional edit and delete buttons
 -->
 
-<mat-spinner *ngIf="isLoading"></mat-spinner> <!-- Loading Animation -->
-<mat-accordion *ngIf="posts.length > 0 && !isLoading"> <!-- Only show on array with content -->
-  <mat-expansion-panel *ngFor="let post of posts"> <!-- post in typescript posts array -->
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<!-- Loading Animation -->
+<mat-accordion *ngIf="posts.length > 0 && !isLoading">
+  <!-- Only show on array with content -->
+  <mat-expansion-panel *ngFor="let post of posts">
+    <!-- post in typescript posts array -->
     <mat-expansion-panel-header>
-      {{post.title}} <!-- String injection of title-->
+      {{ post.title }}
+      <!-- String injection of title-->
     </mat-expansion-panel-header>
-    <div class="post-image"> <!-- loads image from the server, alt text is post title -->
-      <img [src]="post.imagePath" [alt]="post.title">
+    <div class="post-image">
+      <!-- loads image from the server, alt text is post title -->
+      <img [src]="post.imagePath" [alt]="post.title" />
     </div>
-    <p>{{post.content}}</p> <!-- string injection of content -->
+    <p>{{ post.content }}</p>
+    <!-- string injection of content -->
     <mat-action-row>
       <!-- Links to edit page -->
       <a [routerLink]="['/edit', post.id]" mat-button color="primary">EDIT</a>
       <!-- Sends delete request -->
-      <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
+      <button mat-button color="warn" (click)="onDelete(post.id)">
+        DELETE
+      </button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
+<mat-paginator
+  [length]="totalPosts"
+  [pageSize]="postsPerPage"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onChangedPage($event)"
+  *ngIf="posts.length > 0"
+></mat-paginator>
 <!-- On empty array -->
-<p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">No Posts added yet!</p>
+<p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">
+  No Posts added yet!
+</p>

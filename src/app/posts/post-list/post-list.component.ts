@@ -1,6 +1,9 @@
 // Angular Imports
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
+// Material Imports
+import { PageEvent } from '@angular/material/paginator';
+
 // Package Imports
 import { Subscription } from 'rxjs';
 
@@ -25,6 +28,12 @@ export class PostListComponent implements OnInit, OnDestroy {
   // For loading components
   isLoading = false;
 
+  // For Pagination
+  totalPosts = 0;
+  postsPerPage = 2;
+  currentPage = 1;
+  pageSizeOptions = [1, 2, 5, 10];
+
   // Import Posts Service
   constructor(public PostsService: PostsService) {}
 
@@ -33,23 +42,33 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     // Update Frontend Array in PostsService
-    this.PostsService.getPosts();
+    this.PostsService.getPosts(this.postsPerPage, this.currentPage);
 
     // Assign event listener (Subscription) to Posts Service Post Update event
     this.postsSub = this.PostsService.getPostUpdateListener()
       // To execute on activation - returns post array
-      .subscribe((posts: Post[]) => {
+      .subscribe((postData: { posts: Post[]; postCount: number }) => {
         // End loading animations
         this.isLoading = false;
 
         // Update local array
-        this.posts = posts;
+        this.posts = postData.posts;
+        this.totalPosts = postData.postCount;
       });
+  }
+
+  onChangedPage(pageData: PageEvent) {
+    this.currentPage = pageData.pageIndex + 1;
+    this.postsPerPage = pageData.pageSize;
+    this.PostsService.getPosts(this.postsPerPage, this.currentPage);
   }
 
   // Delete post - Posts service handles array, sends updated list back
   onDelete(postId: string) {
-    this.PostsService.deletePost(postId);
+    this.isLoading = true;
+    this.PostsService.deletePost(postId).subscribe(() => {
+      this.PostsService.getPosts(this.postsPerPage, this.currentPage);
+    });
   }
 
   // End Custom Subscription to event listener
