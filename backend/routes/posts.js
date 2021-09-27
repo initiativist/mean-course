@@ -81,16 +81,15 @@ router.put(
       const url = req.protocol + "://" + req.get("host");
       imagePath = url + "/images/" + req.file.filename;
     }
+
+    const post = new Post({
+      _id: req.body.id,
+      title: req.body.title,
+      content: req.body.content,
+      imagePath: imagePath,
+    });
     // Mongoose update function based on filter and return success response
-    console.log(req.body.title + req.body.content, + imagePath)
-    Post.updateOne(
-      { _id: req.params.id },
-      {
-        title: req.body.title,
-        content: req.body.content,
-        imagePath: imagePath,
-      }
-    )
+    Post.updateOne({ _id: req.params.id }, post)
       .then((result) => {
         console.log(result);
         res.status(200).json({ message: "update successful!" });
