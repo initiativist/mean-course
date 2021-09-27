@@ -75,20 +75,29 @@ router.put(
   // Processes file if it exists
   multer({ storage: storage }).single("image"),
   (req, res, next) => {
-    // Debug Handling for rn
-    console.log(req.file);
-    // create post to update
-    // TODO:Currently getting ID overwrite error
-    const post = new Post({
-      _id: req.body.id,
-      title: req.body.title,
-      content: req.body.content,
-    });
-    // Mongoose update function bsed on filter and return success response
-    Post.updateOne({ _id: req.params.id }, post).then((result) => {
-      console.log(result);
-      res.status(200).json({ message: "update successful!" }); // TODO: should this be a 201 return?
-    });
+    let imagePath = req.body.imagePath;
+    // check if there's a new file or just a string with url
+    if (req.file) {
+      const url = req.protocol + "://" + req.get("host");
+      imagePath = url + "/images/" + req.file.filename;
+    }
+    // Mongoose update function based on filter and return success response
+    console.log(req.body.title + req.body.content, + imagePath)
+    Post.updateOne(
+      { _id: req.params.id },
+      {
+        title: req.body.title,
+        content: req.body.content,
+        imagePath: imagePath,
+      }
+    )
+      .then((result) => {
+        console.log(result);
+        res.status(200).json({ message: "update successful!" });
+      })
+      .catch((result) => {
+        res.status(500).json({ message: "Update not successful! " });
+      });
   }
 );
 

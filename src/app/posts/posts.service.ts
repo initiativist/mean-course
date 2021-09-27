@@ -127,15 +127,15 @@ export class PostsService {
     let postData: Post | FormData;
 
     // Testing for image object type
-    if (typeof image === 'object') {
+    if (typeof(image) === 'object') {
       // Uploading a new image requires FormData (handled by multer)
-      const postData = new FormData();
+      postData = new FormData();
       postData.append('title', title),
         postData.append('content', content),
         postData.append('image', image, title); // Title used as part of filename - image is a file in this instance
     } else {
       // Without a new image, just Javascript object necessary
-      const postData: Post = {
+      postData = {
         id: id,
         title: title,
         content: content,
@@ -143,6 +143,7 @@ export class PostsService {
       };
     }
 
+    console.log(postData)
     // Send HTTP request with postData object - either PostData or just object
     this.http
       // Server routing for post manipulation
