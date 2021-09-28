@@ -11,6 +11,7 @@ const path = require("path")
 
 // Custom Imports
 const postRoutes = require("./routes/posts")
+const userRoutes = require("./routes/user")
 
 // Instantiate express app
 const app = express();
@@ -47,6 +48,7 @@ app.use((req,res, next) => {
 
 // Posts router
 app.use("/api/posts", postRoutes)
+app.use("/api/user", userRoutes)
 
 // Externaly accessible
 module.exports = app;

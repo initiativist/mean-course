@@ -21,3 +21,6 @@ Packages included in this build (see package.json for versions):
 - RxJs
 - Material for Angular
 - Multer
+- Mongoose Unique Validator (Dependency on Mongoose 5.2.1 required a legacy-peer-deps install (last pubbed 2yrs ago))
+- bcrypt
+- jsonwebtoken

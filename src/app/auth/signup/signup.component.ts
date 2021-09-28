@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signup', // wil get loaded through routing, selector unnecessary?
@@ -9,10 +10,13 @@ import { NgForm } from '@angular/forms';
 
 export class SignupComponent implements OnInit {
   isLoading = false;
-  constructor() { }
+  constructor(public authService: AuthService) { }
 
   onSignup(form: NgForm) {
-    console.log(form.value)
+    if (form.invalid) {
+      return;
+    }
+    this.authService.createUser(form.value.email, form.value.password)
   }
 
   ngOnInit() { }
