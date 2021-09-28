@@ -8,7 +8,6 @@ const router = express.Router();
 
 // Custom Imports
 const User = require("../models/user");
-const user = require("../models/user");
 
 router.post("/signup", (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then((hash) => {
@@ -33,24 +32,26 @@ router.post("/signup", (req, res, next) => {
 });
 
 router.post("/login", (req, res, next) => {
+  let fetchedUser;
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
         return res.status(401).json({
-          message: "auth failed",
+          message: "auth failed1",
         });
       }
+      fetchedUser = user;
       return bcrypt.compare(req.body.password, user.password);
     })
     .then((result) => {
       if (!result) {
         res.status(401).json({
-          error: err,
+          message: "auth failed2",
         });
       }
       const token = jwt.sign(
-        { email: user.email, userId: user._id },
-        "oddly-particular-secret".repeat(0),
+        { email: fetchedUser.email, userId: fetchedUser._id },
+        "oddly-particular-secret".repeat(10),
         { expiresIn: "1h" }
       ); // This is extremely insecure??
       res.status(200).json({
@@ -59,7 +60,7 @@ router.post("/login", (req, res, next) => {
     })
     .catch((err) => {
       res.status(401).json({
-        error: err,
+        message: "auth failed3",
       });
     });
 });

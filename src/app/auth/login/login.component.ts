@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login', // wil get loaded through routing, selector unnecessary?
@@ -9,10 +10,13 @@ import { NgForm } from '@angular/forms';
 
 export class LoginComponent implements OnInit {
   isLoading = false;
-  constructor() { }
+  constructor(public authService: AuthService) { }
 
   onLogin(form: NgForm) {
-    console.log(form.value)
+    if (form.invalid) {
+      return;
+    }
+    this.authService.login(form.value.email, form.value.password)
   }
 
   ngOnInit() { }
