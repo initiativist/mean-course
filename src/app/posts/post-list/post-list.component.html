@@ -21,7 +21,7 @@
     </div>
     <p>{{ post.content }}</p>
     <!-- string injection of content -->
-    <mat-action-row>
+    <mat-action-row *ngIf="userIsAuthenticated">
       <!-- Links to edit page -->
       <a [routerLink]="['/edit', post.id]" mat-button color="primary">EDIT</a>
       <!-- Sends delete request -->

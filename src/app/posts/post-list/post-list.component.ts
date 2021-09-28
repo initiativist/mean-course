@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 // Custom Imports
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-post-list',
@@ -22,8 +23,11 @@ export class PostListComponent implements OnInit, OnDestroy {
   // Postlist frontend DB
   posts: Post[] = [];
 
-  // Subscription to Update Posts event listener in Posts Service
+  // Subscriptions
   private postsSub: Subscription = new Subscription();
+  private authStatusSub: Subscription;
+
+  public userIsAuthenticated = false;
 
   // For loading components
   isLoading = false;
@@ -35,7 +39,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   pageSizeOptions = [1, 2, 5, 10];
 
   // Import Posts Service
-  constructor(public PostsService: PostsService) {}
+  constructor(public PostsService: PostsService, private authService: AuthService) {}
 
   ngOnInit() {
     // Start loading animations
@@ -44,17 +48,16 @@ export class PostListComponent implements OnInit, OnDestroy {
     // Update Frontend Array in PostsService
     this.PostsService.getPosts(this.postsPerPage, this.currentPage);
 
-    // Assign event listener (Subscription) to Posts Service Post Update event
     this.postsSub = this.PostsService.getPostUpdateListener()
-      // To execute on activation - returns post array
       .subscribe((postData: { posts: Post[]; postCount: number }) => {
-        // End loading animations
         this.isLoading = false;
-
-        // Update local array
         this.posts = postData.posts;
         this.totalPosts = postData.postCount;
       });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+      this.userIsAuthenticated = isAuthenticated;
+    });
   }
 
   onChangedPage(pageData: PageEvent) {
@@ -74,5 +77,6 @@ export class PostListComponent implements OnInit, OnDestroy {
   // End Custom Subscription to event listener
   ngOnDestroy() {
     this.postsSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
   }
 }
