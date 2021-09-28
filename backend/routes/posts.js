@@ -10,6 +10,7 @@ const multer = require("multer");
 
 // Custom Imports
 const Post = require("../models/post");
+const checkAuth = require("../middleware/check-auth");
 
 // Instantiate Router
 const router = express.Router();
@@ -43,6 +44,7 @@ const storage = multer.diskStorage({
 // handles new posts
 router.post(
   "",
+  checkAuth,
   // pull out image if it exists
   multer({ storage: storage }).single("image"),
   // handle request
@@ -72,6 +74,7 @@ router.post(
 // Used for updating posts
 router.put(
   "/:id",
+  checkAuth,
   // Processes file if it exists
   multer({ storage: storage }).single("image"),
   (req, res, next) => {
@@ -137,7 +140,7 @@ router.get("/:id", (req, res, next) => {
 });
 
 // Handles post delete
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", checkAuth, (req, res, next) => {
   // Mongoose delete function (I think)
   Post.deleteOne({ _id: req.params.id }).then((result) => {
     res.status(200).json({ message: "Deleted" });
