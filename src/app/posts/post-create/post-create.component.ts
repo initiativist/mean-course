@@ -28,7 +28,7 @@ export class PostCreateComponent implements OnInit {
   private postId = '';
 
   // Post to update based on form
-  post: Post = { id: '', title: '', content: '', imagePath: null };
+  post: Post = { id: '', title: '', content: '', imagePath: null, creator: '' };
 
   // import posts service ++ activated route to determine active url
   constructor(
@@ -73,6 +73,7 @@ export class PostCreateComponent implements OnInit {
             title: post.title,
             content: post.content,
             imagePath: post.imagePath, // Should be a string or empty!
+            creator: post.creator,
           };
 
           // Set Value recreates the reactive form with values in it.
@@ -105,7 +106,6 @@ export class PostCreateComponent implements OnInit {
 
     // Set handler for completing file load
     reader.onload = () => {
-
       // reader.result contains a url to load the image from
       this.imagePreview = reader.result as string;
     };

@@ -53,8 +53,8 @@ router.post(
     const post = new Post({
       title: req.body.title,
       content: req.body.content,
-      // assign image path for frontend image access
       imagePath: url + "/images/" + req.file.filename,
+      creator: req.userData.userId
     });
     // Use mongoose to place in database and then send a response with the post in it (for imagepath and id access)
     post.save().then((createdPost) => {
@@ -90,12 +90,16 @@ router.put(
       title: req.body.title,
       content: req.body.content,
       imagePath: imagePath,
+      creatpr: req.userData.userId
     });
     // Mongoose update function based on filter and return success response
-    Post.updateOne({ _id: req.params.id }, post)
+    Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
       .then((result) => {
-        console.log(result);
-        res.status(200).json({ message: "update successful!" });
+        if (result.n > 0) {
+          res.status(200).json({ message: "update successful!" });
+        } else {
+          res.status(401).json({ message: "update not authorized!" });
+        }
       })
       .catch((result) => {
         res.status(500).json({ message: "Update not successful! " });
@@ -142,8 +146,12 @@ router.get("/:id", (req, res, next) => {
 // Handles post delete
 router.delete("/:id", checkAuth, (req, res, next) => {
   // Mongoose delete function (I think)
-  Post.deleteOne({ _id: req.params.id }).then((result) => {
-    res.status(200).json({ message: "Deleted" });
+  Post.deleteOne({ _id: req.params.id, creator: req.userData.userId }).then((result) => {
+    if (result.nModified > 0) {
+      res.status(200).json({ message: "Deletion successful!" });
+    } else {
+      res.status(401).json({ message: "Deletion not authorized" });
+    }
   });
 });
 

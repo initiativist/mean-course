@@ -51,6 +51,7 @@ export class PostsService {
                 content: post.content,
                 id: post._id, // Changing it to fronted id
                 imagePath: post.imagePath,
+                creator: post.creator,
               };
             }),
             maxPosts: postData.maxPosts,
@@ -83,6 +84,7 @@ export class PostsService {
       title: string;
       content: string;
       imagePath: string; // returns the URL of the image on the server
+      creator: string;
     }>('http://localhost:3000/api/posts/' + id);
   }
 
@@ -128,6 +130,7 @@ export class PostsService {
         title: title,
         content: content,
         imagePath: image, // A string in this instance
+        creator: null,
       };
     }
 

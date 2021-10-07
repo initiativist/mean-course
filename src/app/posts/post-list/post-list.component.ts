@@ -28,6 +28,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
 
   public userIsAuthenticated = false;
+  public userId: string;
 
   // For loading components
   isLoading = false;
@@ -39,7 +40,10 @@ export class PostListComponent implements OnInit, OnDestroy {
   pageSizeOptions = [1, 2, 5, 10];
 
   // Import Posts Service
-  constructor(public PostsService: PostsService, private authService: AuthService) {}
+  constructor(
+    public PostsService: PostsService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     // Start loading animations
@@ -48,16 +52,22 @@ export class PostListComponent implements OnInit, OnDestroy {
     // Update Frontend Array in PostsService
     this.PostsService.getPosts(this.postsPerPage, this.currentPage);
 
-    this.postsSub = this.PostsService.getPostUpdateListener()
-      .subscribe((postData: { posts: Post[]; postCount: number }) => {
+    this.userId = this.authService.getUserId();
+
+    this.postsSub = this.PostsService.getPostUpdateListener().subscribe(
+      (postData: { posts: Post[]; postCount: number }) => {
         this.isLoading = false;
         this.posts = postData.posts;
         this.totalPosts = postData.postCount;
-      });
+      }
+    );
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-    });
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuthenticated) => {
+        this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
+      });
   }
 
   onChangedPage(pageData: PageEvent) {
