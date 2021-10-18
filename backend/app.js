@@ -17,7 +17,7 @@ const userRoutes = require("./routes/user")
 const app = express();
 
 // Using mongoose package as ORM for MongoDB
-mongoose.connect('mongodb+srv://Spider:A4JfR3xbSdlGqWR2@cluster0.oypa8.mongodb.net/node-angular?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://Spider:' + process.env.MONGO_ATLAS_PW + '@cluster0.oypa8.mongodb.net/node-angular?retryWrites=true&w=majority')
   .then(() => {
     console.log("Connected to database!");
   })

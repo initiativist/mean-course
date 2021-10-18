@@ -44,7 +44,7 @@ exports.userLogin = (req, res, next) => {
       }
       const token = jwt.sign(
         { email: fetchedUser.email, userId: fetchedUser._id },
-        "oddly-particular-secret".repeat(10),
+        process.env.JWT_KEY,
         { expiresIn: "1h" }
       ); // TODO: This is extremely insecure??
       res.status(200).json({
