@@ -1,7 +1,9 @@
 // Angular Imports
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 // Custom Imports
 import { Post } from '../post.model';
@@ -13,11 +15,12 @@ import { mimeType } from './mime-type.validator';
   templateUrl: './post-create.component.html',
   styleUrls: ['./post-create.component.css'],
 })
-export class PostCreateComponent implements OnInit {
+export class PostCreateComponent implements OnInit, OnDestroy {
   // Constants for form functionality
   enteredContent = '';
   enteredTitle = '';
   isLoading = false;
+  private authStatusSub: Subscription;
 
   // Using form group for a reactive form
   form: FormGroup = new FormGroup({});
@@ -33,11 +36,17 @@ export class PostCreateComponent implements OnInit {
   // import posts service ++ activated route to determine active url
   constructor(
     public postsService: PostsService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public authService: AuthService
   ) {}
 
   // Angular Constructor
   ngOnInit() {
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe(() => {
+        this.isLoading = false;
+      });
     this.form = new FormGroup({
       // Reactive form with three inputs: Title, Content, Field
       title: new FormControl(null, {
@@ -143,5 +152,9 @@ export class PostCreateComponent implements OnInit {
 
     // clears the form!
     this.form.reset();
+  }
+
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
   }
 }

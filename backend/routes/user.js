@@ -25,7 +25,7 @@ router.post("/signup", (req, res, next) => {
       })
       .catch((err) => {
         res.status(500).json({
-          error: err,
+          message: "Invalid Authentication Credentials!",
         });
       });
   });
@@ -37,7 +37,7 @@ router.post("/login", (req, res, next) => {
     .then((user) => {
       if (!user) {
         return res.status(401).json({
-          message: "auth failed1",
+          message: "Invalid Authentication Credentials",
         });
       }
       fetchedUser = user;
@@ -46,23 +46,23 @@ router.post("/login", (req, res, next) => {
     .then((result) => {
       if (!result) {
         res.status(401).json({
-          message: "auth failed2",
+          message: "Invalid Authentication Credentials",
         });
       }
       const token = jwt.sign(
         { email: fetchedUser.email, userId: fetchedUser._id },
         "oddly-particular-secret".repeat(10),
         { expiresIn: "1h" }
-      ); // This is extremely insecure??
+      ); // TODO: This is extremely insecure??
       res.status(200).json({
         token: token,
         expiresIn: 3600,
-        userId: fetchedUser._id
+        userId: fetchedUser._id,
       });
     })
     .catch((err) => {
       res.status(401).json({
-        message: "auth failed3",
+        message: "Invalid Authentication Credentials",
       });
     });
 });

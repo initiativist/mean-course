@@ -2,7 +2,7 @@
 
 A Learning platform developed by [initiativist](github.com/initiativist)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.5. The project was created by following this [udemy course](https://www.udemy.com/course/angular-2-and-nodejs-the-practical-guide/)
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.5. 
 
 # Stack
 
