@@ -16,8 +16,12 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { environment } from 'src/environments/environment';
+
 // Custom Imports
 import { Post } from './post.model';
+
+const BACKEND_URL = environment.apiUrl + '/posts/';
 
 // Also counted injectable from app.module.ts
 @Injectable({ providedIn: 'root' })
@@ -36,7 +40,7 @@ export class PostsService {
 
       //Send get request via http protocol to server - returning javascript object of type { message: string; posts: any }
       .get<{ message: string; posts: any; maxPosts: number }>(
-        'http://localhost:3000/api/posts' + queryParams
+        BACKEND_URL + queryParams
       )
 
       // format the data through a pipe that changes _id to id.
@@ -85,7 +89,7 @@ export class PostsService {
       content: string;
       imagePath: string; // returns the URL of the image on the server
       creator: string;
-    }>('http://localhost:3000/api/posts/' + id);
+    }>(BACKEND_URL + id);
   }
 
   // HTTP Post request for creating a new post
@@ -98,7 +102,7 @@ export class PostsService {
 
     this.http
       .post<{ message: string; post: Post }>(
-        'http://localhost:3000/api/posts',
+        BACKEND_URL,
         postData // This is the FormData object we're sending
       )
 
@@ -138,7 +142,7 @@ export class PostsService {
     // Send HTTP request with postData object - either PostData or just object
     this.http
       // Server routing for post manipulation
-      .put('http://localhost:3000/api/posts/' + id, postData)
+      .put(BACKEND_URL + id, postData)
 
       // On success
       .subscribe((response) => {
@@ -148,6 +152,6 @@ export class PostsService {
 
   // DELETE HTTP request
   deletePost(postId: string) {
-    return this.http.delete('http://localhost:3000/api/posts/' + postId);
+    return this.http.delete(BACKEND_URL + postId);
   }
 }
