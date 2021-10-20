@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-const BACKEND_URL = environment.apiUrl + '/users/';
+const BACKEND_URL = environment.apiUrl + '/users';
 
 
 // Custom Imports

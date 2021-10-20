@@ -21,8 +21,9 @@ mongoose.connect('mongodb+srv://Spider:' + process.env.MONGO_ATLAS_PW + '@cluste
   .then(() => {
     console.log("Connected to database!");
   })
-  .catch(() => {
+  .catch((err) => {
     console.log("Connection to database failed!");
+    console.log(err)
   });
 
 // Turn request into json and process incoming url
@@ -30,7 +31,7 @@ app.use(express.json()); // used to be bodyParser, but that's deprecated.
 app.use(express.urlencoded({extended: false}));
 
 // Parse images url to correct location
-app.use("/images", express.static(path.join("backend/images")));
+app.use("/images", express.static(path.join("images")));
 
 // Handles CORS errors for server access and header types
 app.use((req,res, next) => {
